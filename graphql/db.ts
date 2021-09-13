@@ -1,6 +1,8 @@
 import path from 'path'
 import { Database } from 'sqlite3'
 
+import { FellowshipType } from 'types/enums'
+
 class AsyncDatabase {
   db: Database
 
@@ -58,9 +60,19 @@ export type UserProjectRow = {
 
 export type AnnouncementRow = {
   id: number
-  fellowship: 'founders' | 'angels' | 'writers' | 'all'
+  fellowship: FellowshipType
   title: string
   body: string
   created_ts: Date
   updated_ts: Date
+}
+
+export type FeedItemRow = {
+  id: number
+  title: string
+  type: 'Announcement' | 'Project' | 'User'
+  fellowship: FellowshipType
+  body: string
+  image_url: string
+  created_ts: Date
 }

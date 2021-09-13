@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { useQuery, gql } from '@apollo/client'
-import Layout from 'components/Layout'
+import Layout from 'components/layout'
 import UserCard from 'components/UserCard'
 
 const USER_QUERY = gql`

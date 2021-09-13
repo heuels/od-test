@@ -27,10 +27,21 @@ const typeDefs = gql`
     created_ts: String!
   }
 
+  type Feed {
+    id: Int!
+    title: String!
+    type: String!
+    fellowship: String
+    body: String!
+    image_url: String
+    created_ts: String!
+  }
+
   type Query {
     project(id: Int!): Project!
     user(id: Int!): User!
     announcement(id: Int!): Announcement!
+    feed(offset: Int, feedType: String): Feed!
   }
 `
 
