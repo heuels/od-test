@@ -9,11 +9,11 @@
   },
   "dependencies": {
     "@apollo/client": "^3.4.11",
-    "@types/marked": "^1.2.2",
+    "@types/marked": "^3.0.1",
     "apollo-server-micro": "^2.21.0",
     "classnames": "^2.3.1",
     "graphql": "^15.5.3",
-    "marked": "^2.0.0",
+    "marked": "^3.0.3",
     "next": "11.1",
     "prettier": "^2.4.0",
     "react": "17.0.2",

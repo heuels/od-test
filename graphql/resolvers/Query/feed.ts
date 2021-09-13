@@ -10,134 +10,67 @@ type Args = {
   feedType: FellowshipType
 }
 
-export default async function feedItems(
+const DATA_BY_TYPE = {
+  all: ['all', 'founders', 'angels', 'writers'],
+  founders: ['all', 'founders', 'angels'],
+  angels: ['all', 'founders', 'angels'],
+  writers: ['all', 'writers'],
+}
+
+export default async function feed(
   parent: unknown,
-  { LIMIT: LIMIT, offset = 0, feedType = 'all' }: Args
+  { offset = 0, feedType = 'all' }: Args
 ): Promise<FeedItemRow[]> {
   let feedItems: FeedItemRow[] | undefined = []
+  console.log('offset:', offset)
 
-  switch (feedType) {
-    case 'writers':
-      feedItems = await db.getAll(
-        `
-      SELECT 
-        id, 
-        'Announcement' as type, 
-        title, 
-        fellowship, 
-        body, 
-        NULL as image_url,
-        created_ts
-        FROM announcements WHERE fellowship == 'writers' OR fellowship == 'all'
-        UNION ALL 
-        SELECT 
-            id, 
-            'User' as type,
-            name as title, 
-            fellowship, 
-            bio as body,
-            avatar_url as image_url,
-            created_ts
-        FROM users WHERE fellowship == 'writers'
-        UNION ALL 
-        SELECT 
-            id, 
-            'Project' as type,
-            name as title, 
-            NULL as fellowship, 
-            description as body, 
-            icon_url as image_url, 
-            created_ts
-        FROM projects WHERE fellowship == 'writers'
-        ORDER BY created_ts DESC 
-        LIMIT 5 OFFSET ?
-      `,
-        [LIMIT, offset]
-      )
-      break
+  const list = DATA_BY_TYPE[feedType]
+  console.log('offset:', offset)
+  console.log('list:', list)
 
-    case 'founders':
-    case 'angels':
-      feedItems = await db.getAll(
-        `
-      SELECT 
-            id, 
-            'Announcement' as type, 
-            title, 
-            fellowship, 
-            body, 
-            NULL as image_url,
-            created_ts
-        FROM announcements WHERE fellowship == 'founders' OR fellowship == 'angels' OR fellowship == 'all'
-        UNION ALL 
-        SELECT 
-            id, 
-            'User' as type,
-            name as title, 
-            fellowship, 
-            bio as body,
-            avatar_url as image_url,
-            created_ts
-        FROM users WHERE fellowship == 'founders' OR fellowship == 'angels'
-        UNION ALL 
-        SELECT 
-            id, 
-            'Project' as type,
-            name as title, 
-            NULL as fellowship, 
-            description as body, 
-            icon_url as image_url, 
-            created_ts
-        FROM projects WHERE fellowship == 'founders' OR fellowship == 'angels'
-        ORDER BY created_ts DESC 
-        LIMIT 5 OFFSET ?
-      `,
-        [LIMIT, offset]
-      )
-      break
-
-    default:
-      feedItems = await db.getAll(
-        `
-      SELECT 
-            id, 
-            'Announcement' as type, 
-            title, 
-            fellowship, 
-            body, 
-            NULL as image_url,
-            created_ts
-        FROM announcements
-        UNION ALL 
-        SELECT 
-            id, 
-            'User' as type,
-            name as title, 
-            fellowship, 
-            bio as body,
-            avatar_url as image_url,
-            created_ts
-        FROM users
-        UNION ALL 
-        SELECT 
-            id, 
-            'Project' as type,
-            name as title, 
-            NULL as fellowship, 
-            description as body, 
-            icon_url as image_url, 
-            created_ts
-        FROM projects 
-        ORDER BY created_ts DESC 
-        LIMIT 5 OFFSET ?
-      `,
-        [LIMIT, offset]
-      )
-      break
-  }
+  feedItems = await db.getAll(
+    `
+       SELECT announcements.id as id,
+       'Announcement' as type,
+       announcements.title as title,
+       announcements.fellowship as fellowship,
+       announcements.body as body,
+       NULL           as image_url,
+       announcements.created_ts as created_ts 
+      FROM announcements
+      WHERE fellowship IN('founders', 'angels', 'all')
+      UNION ALL
+      SELECT users.id as id,
+            'User'     as type,
+            users.name       as title,
+            users.fellowship as fellowship,
+            users.bio        as body,
+            users.avatar_url as image_url,
+            users.created_ts as created_ts
+      FROM users
+      WHERE fellowship IN('founders', 'angels')
+      UNION ALL
+      SELECT DISTINCT projects.id as id,
+            'Project'            as type,
+            projects.name        as title,
+            users.fellowship     as fellowship,
+            projects.description as body,
+            projects.icon_url    as image_url,
+            projects.created_ts  as created_ts
+      FROM projects
+              LEFT JOIN user_projects ON projects.id = user_projects.project_id
+              LEFT JOIN users ON users.id = user_projects.user_id
+      WHERE fellowship IN('founders', 'angels')
+      ORDER BY created_ts DESC
+          LIMIT 5
+      OFFSET ?
+          `,
+    [offset]
+  )
 
   if (!feedItems) {
     throw new Error(`FeedItems not found`)
   }
+
   return feedItems
 }

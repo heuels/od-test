@@ -1,7 +1,10 @@
 import { useRouter } from 'next/router'
 import { useQuery, gql } from '@apollo/client'
+
 import Layout from 'components/layout'
-import ProjectCard from 'components/ProjectCard'
+import ProjectCard from 'components/card/project'
+
+import Loader from '@ui/loader'
 
 const PROJECT_QUERY = gql`
   query project($id: Int!) {
@@ -53,13 +56,15 @@ export default function ProjectPage() {
   )
   const project = data?.project
 
-  if (!project || loading || error) {
+  if (loading) return <Loader centered />
+
+  if (!project || error) {
     return null
   }
 
   return (
     <Layout>
-      <ProjectCard project={project} />
+      <ProjectCard data={project} />
     </Layout>
   )
 }
