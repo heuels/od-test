@@ -1,7 +1,10 @@
-import {useRouter} from 'next/router'
-import {useQuery, gql} from '@apollo/client'
-import Layout from 'components/Layout'
-import ProjectCard from 'components/ProjectCard'
+import { useRouter } from 'next/router'
+import { useQuery, gql } from '@apollo/client'
+
+import Layout from 'components/layout'
+import ProjectCard from 'components/card/project'
+
+import Loader from '@ui/loader'
 
 const PROJECT_QUERY = gql`
   query project($id: Int!) {
@@ -20,46 +23,48 @@ const PROJECT_QUERY = gql`
 `
 
 type QueryData = {
-  project: Project;
+  project: Project
 }
 
 type QueryVars = {
-  id: number;
+  id: number
 }
 
 type Project = {
-  id: number;
-  name: string;
-  description: string;
-  icon_url: string;
-  users: User[];
+  id: number
+  name: string
+  description: string
+  icon_url: string
+  users: User[]
 }
 
 type User = {
-  id: number;
-  name: string;
-  avatar_url: string;
+  id: number
+  name: string
+  avatar_url: string
 }
 
 export default function ProjectPage() {
-  const {query} = useRouter()
+  const { query } = useRouter()
 
-  const {data, error, loading} = useQuery<QueryData, QueryVars>(
+  const { data, error, loading } = useQuery<QueryData, QueryVars>(
     PROJECT_QUERY,
     {
       skip: !query.id,
-      variables: {id: Number(query.id)},
+      variables: { id: Number(query.id) },
     }
   )
-  const project = data?.project;
+  const project = data?.project
 
-  if (!project || loading || error) {
+  if (loading) return <Loader centered />
+
+  if (!project || error) {
     return null
   }
 
   return (
     <Layout>
-      <ProjectCard project={project} />
+      <ProjectCard data={project} />
     </Layout>
   )
 }
