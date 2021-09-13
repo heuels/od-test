@@ -1,0 +1,41 @@
+.root {
+  position: relative;
+  padding: 20px;
+  margin-bottom: 40px;
+  border: 1px solid #eaeaea;
+}
+
+.img {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.columns {
+  display: flex;
+  flex-direction: row;
+  min-width: 21rem;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  flex-basis: 7rem;
+  flex-grow: 0;
+  flex-shrink: 0;
+  margin-right: 1.5rem;
+}
+
+.right {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  flex-shrink: 0;
+  flex-basis: 14rem;
+}
+
+.fellowship {
+  position: absolute;
+  top: -13px;
+  right: 10px;
+  background: #fff;
+}

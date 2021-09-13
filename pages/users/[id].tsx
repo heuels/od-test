@@ -1,7 +1,10 @@
 import { useRouter } from 'next/router'
 import { useQuery, gql } from '@apollo/client'
+
 import Layout from 'components/layout'
-import UserCard from 'components/UserCard'
+import UserCard from 'components/card/user'
+
+import Loader from '@ui/loader'
 
 const USER_QUERY = gql`
   query user($id: Int!) {
@@ -52,13 +55,15 @@ export default function UserPage() {
   })
   const user = data?.user
 
-  if (!user || loading || error) {
+  if (loading) return <Loader centered />
+
+  if (!user || error) {
     return null
   }
 
   return (
     <Layout>
-      <UserCard user={user} />
+      <UserCard data={user} />
     </Layout>
   )
 }
