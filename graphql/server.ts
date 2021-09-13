@@ -1,4 +1,4 @@
-import {ApolloServer, gql} from 'apollo-server-micro'
+import { ApolloServer, gql } from 'apollo-server-micro'
 import * as resolvers from './resolvers'
 
 const typeDefs = gql`
@@ -23,6 +23,6 @@ const typeDefs = gql`
     project(id: Int!): Project!
     user(id: Int!): User!
   }
-`;
+`
 
-export const server = new ApolloServer({typeDefs, resolvers})
+export const server = new ApolloServer({ typeDefs, resolvers })

@@ -1,5 +1,5 @@
-import {ApolloClient, InMemoryCache, ApolloProvider} from '@apollo/client'
-import {createGlobalStyle, ThemeProvider} from 'styled-components'
+import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client'
+import { createGlobalStyle, ThemeProvider } from 'styled-components'
 import type { AppProps } from 'next/app'
 
 export default function MyApp({ Component, pageProps }: AppProps) {
@@ -21,9 +21,8 @@ const client = new ApolloClient({
 })
 
 const theme = {
-  colors: {
-  }
-};
+  colors: {},
+}
 
 const GlobalStyle = createGlobalStyle`
   html,
@@ -71,4 +70,4 @@ const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
   }
-`;
+`

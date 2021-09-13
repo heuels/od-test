@@ -1,11 +1,9 @@
 import styled from 'styled-components'
 
-export default function Layout({children}: React.PropsWithChildren<{}>) {
+export default function Layout({ children }: React.PropsWithChildren<{}>) {
   return (
     <Container>
-      <Main>
-        {children}
-      </Main>
+      <Main>{children}</Main>
     </Container>
   )
 }

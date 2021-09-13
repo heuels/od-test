@@ -4,29 +4,29 @@ import Card from './Card'
 import Markdown from './Markdown'
 
 type Props = {
-  project: Project;
+  project: Project
 }
 
 type Project = {
-  id: number;
-  name: string;
-  description: string;
-  icon_url: string;
-  users: User[];
+  id: number
+  name: string
+  description: string
+  icon_url: string
+  users: User[]
 }
 
 type User = {
-  id: number;
-  name: string;
-  avatar_url: string;
+  id: number
+  name: string
+  avatar_url: string
 }
 
-export default function ProjectCard({project}: Props) {
+export default function ProjectCard({ project }: Props) {
   return (
     <Card>
       <Columns>
         <ColumnLeft>
-          <Icon src={project.icon_url}/>
+          <Icon src={project.icon_url} />
         </ColumnLeft>
         <ColumnRight>
           <h2>{project.name}</h2>
@@ -34,7 +34,7 @@ export default function ProjectCard({project}: Props) {
           {!!project.users.length && (
             <>
               <h3>Participants:</h3>
-              {project.users.map(u => (
+              {project.users.map((u) => (
                 <Participant key={u.id} user={u} />
               ))}
             </>
@@ -44,7 +44,6 @@ export default function ProjectCard({project}: Props) {
     </Card>
   )
 }
-
 
 const Icon = styled.img`
   background-color: rgba(0, 0, 0, 0.1);
@@ -74,16 +73,14 @@ const ColumnRight = styled.div`
   flex-basis: 14rem;
 `
 
-function Participant({user}: {user: User}) {
+function Participant({ user }: { user: User }) {
   return (
     <ParticipantContainer>
       <ParticipantColumnLeft>
         <ParticipantAvatar src={user.avatar_url} />
       </ParticipantColumnLeft>
       <ParticipantColumnRight>
-        <Link href={`/users/${user.id}`}>
-          {user.name}
-        </Link>
+        <Link href={`/users/${user.id}`}>{user.name}</Link>
       </ParticipantColumnRight>
     </ParticipantContainer>
   )
