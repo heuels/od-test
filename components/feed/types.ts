@@ -1,5 +1,6 @@
 export type AnnouncementType = {
   id: number
+  type: 'Announcement'
   fellowship: 'founders' | 'angels' | 'writers' | 'all'
   title: string
   body: string
@@ -9,6 +10,7 @@ export type AnnouncementType = {
 export type ProjectType = {
   id: number
   name: string
+  type: 'Project'
   description: string
   icon_url: string
   created_ts: Date
@@ -18,6 +20,7 @@ export type ProjectType = {
 export type UserType = {
   id: number
   name: string
+  type: 'User'
   bio: string
   avatar_url: string
   fellowship: string

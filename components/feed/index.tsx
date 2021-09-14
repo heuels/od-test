@@ -26,7 +26,6 @@ const Feed: FC<{ initial?: number }> = ({ initial = 0 }) => {
   })
 
   const { offset, hasMore } = feedState
-
   const { query } = useRouter()
   const { data, error, loading, fetchMore } = useQuery<
     QueryData,
@@ -42,10 +41,7 @@ const Feed: FC<{ initial?: number }> = ({ initial = 0 }) => {
   if (!data || error) {
     return null
   }
-
   const { feed } = data
-
-  console.log(feedType, 'feedType')
 
   return (
     <>
@@ -69,7 +65,15 @@ const Feed: FC<{ initial?: number }> = ({ initial = 0 }) => {
         scrollableTarget="scrollableDiv"
       >
         <form className={styles.form}>
-          <select onChange={(e) => setFeedType(e.target.value)}>
+          <select
+            onChange={(e) => {
+              setFeedType(e.target.value)
+              setFeedState({
+                offset: 0,
+                hasMore: true,
+              })
+            }}
+          >
             {fellowships.map((item, key) => {
               return (
                 <option key={key} value={item}>

@@ -9,12 +9,12 @@ export const QUERY = gql`
       body
       image_url
       created_ts
-      # projects {
-      #   id
-      # }
-      # users {
-      #   id
-      # }
+      projects {
+        id
+      }
+      users {
+        id
+      }
     }
   }
 `
