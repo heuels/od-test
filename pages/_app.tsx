@@ -22,7 +22,7 @@ const client = new ApolloClient({
     typePolicies: {
       Query: {
         fields: {
-          feed: offsetLimitPagination(),
+          feed: offsetLimitPagination(['feedType']),
         },
       },
     },
