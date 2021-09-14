@@ -3,11 +3,12 @@ import Link from 'next/link'
 import Text from '@ui/text'
 import Label from '@ui/label'
 
-import AdditionalInfo from './additionalInfo'
+import SmallItem from './smallItem'
 
 import { Project } from './types'
 
 import styles from './card.module.css'
+import SmallItem from './smallItem'
 
 export type ProjectProps = {
   data: Project
@@ -35,7 +36,7 @@ const ProjectCard: React.FC<ProjectProps> = ({
             <>
               <h3>Participants:</h3>
               {users.map((item) => (
-                <AdditionalInfo
+                <SmallItem
                   key={item.id}
                   id={item.id}
                   url={item.avatar_url}

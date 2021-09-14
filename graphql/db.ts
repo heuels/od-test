@@ -67,12 +67,13 @@ export type AnnouncementRow = {
   updated_ts: Date
 }
 
+export type AdditionalFieldRow = UserRow | ProjectRow | AnnouncementRow | null
+
+//union SearchResult = Book | Author
+
 export type FeedItemRow = {
   id: number
-  title: string
   type: 'Announcement' | 'Project' | 'User'
-  fellowship: FellowshipType
-  body: string
-  image_url: string
   created_ts: Date
+  additionalFields: AdditionalFieldRow
 }

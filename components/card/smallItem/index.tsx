@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import styles from './aditionalInfo.module.css'
+import styles from './smallItem.module.css'
 
 type SmallItemProps = {
   id: number

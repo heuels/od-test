@@ -2,7 +2,7 @@ import Text from '@ui/text'
 import Link from 'next/link'
 import Label from '@ui/label'
 
-import SmallItem from './additionalInfo'
+import SmallItem from './smallItem'
 
 import { CardComponentProps } from './types'
 
@@ -10,14 +10,10 @@ import styles from './card.module.css'
 
 const Card: React.FC<CardComponentProps> = ({
   id,
-  title,
   type,
-  fellowship,
-  body,
-  image_url,
-  created_ts,
-  componentPlace = 'page',
+  data: { title, body, fellowship, created_ts, image_url, projects, users },
 }) => {
+  const smallItems = [...(projects || []), ...(users || [])]
   return (
     <div className={styles.root}>
       <Label className={styles.fellowship}>
@@ -31,14 +27,18 @@ const Card: React.FC<CardComponentProps> = ({
         )}
         <div className={image_url ? styles.right : ''}>
           <Text bold size="18" tagName="h2">
-            {componentPlace === 'page' ? (
-              { title }
-            ) : (
-              <Link href={`${type}/${id}`}>{title}</Link>
-            )}
+            {title}
           </Text>
-
-          <Text markedText={body} />
+          <Text markedText={body} />{' '}
+          {smallItems.map((item) => (
+            <SmallItem
+              key={item.id}
+              id={item.id}
+              url={item.image_url}
+              name={item.name}
+              type="users"
+            />
+          ))}
         </div>
       </div>
     </div>

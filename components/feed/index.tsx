@@ -81,7 +81,7 @@ const Feed: FC<{}> = () => {
             } = res
             setFeedState({
               offset: offset + feed.length,
-              hasMore: feed.length !== 0,
+              hasMore: feed.length,
             })
           })
         }
@@ -107,20 +107,9 @@ const Feed: FC<{}> = () => {
           <Loader />
         ) : (
           feed.map((item, key) => {
-            const { id, title, type, fellowship, body, image_url, created_ts } =
-              item
+            const { id, type, additionalFields } = item
             return (
-              <Card
-                id={id}
-                key={key}
-                title={title}
-                type={type}
-                fellowship={fellowship}
-                body={body}
-                image_url={image_url}
-                created_ts={created_ts}
-                componentPlace="listing"
-              />
+              <Card id={id} key={key} data={additionalFields} type={type} />
             )
           })
         )}

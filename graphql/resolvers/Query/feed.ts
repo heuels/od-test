@@ -49,7 +49,7 @@ export default async function feed(
     feedType !== 'writers'
       ? `UNION ALL
       SELECT DISTINCT projects.id as id,
-            'projects'             as type,
+            'Project'             as type,
             projects.name         as title,
             users.fellowship      as fellowship,
             projects.description  as body,
@@ -63,7 +63,7 @@ export default async function feed(
 
   feedItems = await db.getAll(
     `SELECT announcements.id     as id,
-       'announcements'            as type,
+       'Announcement'            as type,
         announcements.title      as title,
         announcements.fellowship as fellowship,
         announcements.body       as body,
@@ -73,7 +73,7 @@ export default async function feed(
         ${getFilterByType(feedType).announcements}
         UNION ALL
         SELECT users.id      as id,
-            'users'           as type,
+            'User'           as type,
             users.name       as title,
             users.fellowship as fellowship,
             users.bio        as body,
@@ -83,7 +83,7 @@ export default async function feed(
         ${getFilterByType(feedType).users}
         ${projects}
         ORDER BY created_ts DESC
-          LIMIT ${LIMIT}
+        LIMIT ${LIMIT}
         OFFSET ${offset}`
   )
 
