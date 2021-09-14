@@ -2,23 +2,21 @@ import Text from '@ui/text'
 import Link from 'next/link'
 import Label from '@ui/label'
 
-import SmallItem from './smallItem'
+import SmallItem from './additionalInfo'
 
-import { CardType } from './types'
+import { CardComponentProps } from './types'
 
 import styles from './card.module.css'
 
-export type CardProps = {
-  data: CardType
-}
-
-const Card: React.FC<UserProps> = ({
+const Card: React.FC<CardComponentProps> = ({
+  id,
   title,
   type,
   fellowship,
   body,
   image_url,
   created_ts,
+  componentPlace = 'page',
 }) => {
   return (
     <div className={styles.root}>
@@ -33,7 +31,11 @@ const Card: React.FC<UserProps> = ({
         )}
         <div className={image_url ? styles.right : ''}>
           <Text bold size="18" tagName="h2">
-            {title}
+            {componentPlace === 'page' ? (
+              { title }
+            ) : (
+              <Link href={`${type}/${id}`}>{title}</Link>
+            )}
           </Text>
 
           <Text markedText={body} />

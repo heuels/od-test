@@ -29,6 +29,7 @@ export type User = {
 }
 
 export type CardType = {
+  id: number
   title: string
   type: 'Announcement' | 'Project' | 'User'
   fellowship: Fellowship
@@ -36,3 +37,5 @@ export type CardType = {
   image_url: string
   created_ts: Date
 }
+
+export type CardComponentProps = CardType  & { componentPlace = 'listing' | 'page'}

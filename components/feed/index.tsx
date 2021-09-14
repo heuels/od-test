@@ -1,7 +1,9 @@
 import React, { FC, useState, useEffect } from 'react'
 import cx from 'classnames'
 import InfiniteScroll from 'react-infinite-scroll-component'
+
 import Link from 'next/link'
+import Text from '@ui/text'
 
 import { useRouter } from 'next/router'
 import { useQuery } from '@apollo/client'
@@ -34,23 +36,20 @@ const Feed: FC<{}> = () => {
     const {
       query: { type },
     } = router
-    setFeedType(type)
+
+    setFeedType(type || 'all')
   }, [router.isReady])
 
   const handleOnChange = (value: string): void => {
-    //console.log('handleOnChange')
     setFeedType(value)
     setFeedState({
       offset: 0,
       hasMore: true,
     })
-    router.push(`/?type=${value}`, undefined, {
-      shallow: true,
-    })
+    router.push(`/?type=${value}`)
   }
 
   const { offset, hasMore } = feedState
-  const { query } = useRouter()
   const { data, error, loading, fetchMore } = useQuery<
     QueryData,
     QueryVariables
@@ -61,7 +60,6 @@ const Feed: FC<{}> = () => {
     },
   })
 
-  // if (loading) return <Loader centered />
   if (!data || error) {
     return null
   }
@@ -109,10 +107,11 @@ const Feed: FC<{}> = () => {
           <Loader />
         ) : (
           feed.map((item, key) => {
-            const { title, type, fellowship, body, image_url, created_ts } =
+            const { id, title, type, fellowship, body, image_url, created_ts } =
               item
             return (
               <Card
+                id={id}
                 key={key}
                 title={title}
                 type={type}
@@ -120,6 +119,7 @@ const Feed: FC<{}> = () => {
                 body={body}
                 image_url={image_url}
                 created_ts={created_ts}
+                componentPlace="listing"
               />
             )
           })
