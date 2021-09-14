@@ -9,8 +9,6 @@ export default async function additionalFields(
   let item = null
   const props = { id: id }
 
-  console.log('additionalFields', type, id)
-
   switch (type) {
     case 'User':
       try {
@@ -26,6 +24,7 @@ export default async function additionalFields(
       } catch (err) {
         console.log(err)
       }
+      break
 
     case 'Announcement':
       try {
