@@ -32,12 +32,12 @@ export type QueryData = {
   feed: FeedItem[]
 }
 
-type QueryVariables = {
+export type QueryVariables = {
   offset: number
   feedType: string
 }
 
-type FeedItem = {
+export type FeedItem = {
   title: string
   type: 'Announcement' | 'Project' | 'User'
   fellowship: Fellowship

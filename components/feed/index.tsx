@@ -25,11 +25,13 @@ import { Fellowship } from 'components/card/types'
 const Feed: FC<{}> = () => {
   const router = useRouter()
 
-  const [feedType, setFeedType] = useState<string>('all')
-  const [feedState, setFeedState] = useState<feedStateType>({
-    offset: 0,
-    hasMore: true,
-  })
+  const [feedType, setFeedType] = useState<string | string[]>('all')
+  const [feedState, setFeedState] = useState<{ offset: number; hasMore: true }>(
+    {
+      offset: 0,
+      hasMore: true,
+    }
+  )
 
   useEffect(() => {
     if (!router.isReady) return

@@ -44,44 +44,6 @@ export default async function feed(
       break
 
     case 'founders':
-      feedItems = await db.getAll(
-        `SELECT announcements.id as id,
-       'Announcement'            as type,
-        announcements.title      as title,
-        announcements.fellowship as fellowship,
-        announcements.body       as body,
-        NULL                     as image_url,
-        announcements.created_ts as created_ts 
-        FROM announcements
-        WHERE fellowship IN('all', 'founders')
-        UNION ALL
-        SELECT users.id      as id,
-            'User'           as type,
-            users.name       as title,
-            users.fellowship as fellowship,
-            users.bio        as body,
-            users.avatar_url as image_url,
-            users.created_ts as created_ts
-        FROM users
-        WHERE fellowship IN('founders', 'angels')
-        UNION ALL
-        SELECT DISTINCT projects.id as id,
-                'Project'             as type,
-                projects.name         as title,
-                users.fellowship      as fellowship,
-                projects.description  as body,
-                projects.icon_url     as image_url,
-                projects.created_ts   as created_ts
-        FROM projects
-                LEFT JOIN user_projects ON projects.id = user_projects.project_id
-                LEFT JOIN users ON users.id = user_projects.user_id
-        ORDER BY created_ts DESC
-        LIMIT 5
-        OFFSET ?`,
-        [offset]
-      )
-      break
-
     case 'angels':
       feedItems = await db.getAll(
         `SELECT announcements.id as id,
@@ -92,7 +54,7 @@ export default async function feed(
         NULL                     as image_url,
         announcements.created_ts as created_ts 
         FROM announcements
-        WHERE fellowship IN('all', 'angels')
+        WHERE fellowship IN('all', ?)
         UNION ALL
         SELECT users.id      as id,
             'User'           as type,
@@ -117,7 +79,7 @@ export default async function feed(
         ORDER BY created_ts DESC
         LIMIT 5
         OFFSET ?`,
-        [offset]
+        [feedType, offset]
       )
       break
 
