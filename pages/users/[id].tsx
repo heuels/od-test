@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { useQuery, gql } from '@apollo/client'
 
 import Layout from 'components/layout'
-import UserCard from 'components/card/user'
+import Card from 'components/card'
 
 import Loader from '@ui/loader'
 
@@ -13,6 +13,7 @@ const USER_QUERY = gql`
       name
       bio
       fellowship
+      created_ts
       avatar_url
       projects {
         id
@@ -61,9 +62,21 @@ export default function UserPage() {
     return null
   }
 
+  const { id, name, bio, fellowship, avatar_url, projects, created_ts } = user
   return (
     <Layout showBackLink>
-      <UserCard data={user} />
+      <Card
+        id={id}
+        type="Project"
+        data={{
+          title: name,
+          body: bio,
+          fellowship: fellowship,
+          created_ts: created_ts,
+          image_url: avatar_url,
+          projects: projects,
+        }}
+      />
     </Layout>
   )
 }

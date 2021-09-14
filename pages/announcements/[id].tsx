@@ -4,6 +4,7 @@ import { useQuery, gql } from '@apollo/client'
 import Loader from '@ui/loader'
 
 import Layout from 'components/layout'
+import Card from 'components/card'
 
 const ANNOUNCEMENT_QUERY = gql`
   query announcement($id: Int!) {
@@ -50,13 +51,19 @@ export default function AnnouncementPage() {
     return null
   }
 
-  const { body, fellowship, title } = announcement
-
+  const { id, fellowship, title, body, created_ts } = announcement
   return (
     <Layout showBackLink>
-      {title}
-      {body}
-      {fellowship}
+      <Card
+        id={id}
+        type="Project"
+        data={{
+          title: title,
+          body: body,
+          fellowship: fellowship,
+          created_ts: created_ts,
+        }}
+      />
     </Layout>
   )
 }

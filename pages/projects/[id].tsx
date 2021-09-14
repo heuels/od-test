@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import { useQuery, gql } from '@apollo/client'
 
 import Layout from 'components/layout'
-import ProjectCard from 'components/card/project'
+import Card from 'components/card'
 
 import Loader from '@ui/loader'
 
@@ -13,6 +13,7 @@ const PROJECT_QUERY = gql`
       name
       description
       icon_url
+      created_ts
       users {
         id
         name
@@ -62,9 +63,20 @@ export default function ProjectPage() {
     return null
   }
 
+  const { id, name, description, icon_url, users, created_ts } = project
   return (
     <Layout showBackLink>
-      <ProjectCard data={project} />
+      <Card
+        id={id}
+        type="Project"
+        data={{
+          title: name,
+          body: description,
+          created_ts: created_ts,
+          image_url: icon_url,
+          users: users,
+        }}
+      />
     </Layout>
   )
 }
