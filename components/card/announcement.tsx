@@ -2,8 +2,6 @@ import Text from '@ui/text'
 import Label from '@ui/label'
 import Link from 'next/link'
 
-import SmallItem from './smallItem'
-
 import styles from './card.module.css'
 
 import { Announcement } from './types'

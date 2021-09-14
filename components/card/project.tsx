@@ -1,10 +1,9 @@
 import Link from 'next/link'
-import Image from 'next/image'
 
 import Text from '@ui/text'
 import Label from '@ui/label'
 
-import SmallItem from './smallItem'
+import AdditionalInfo from './additionalInfo'
 
 import { Project } from './types'
 
@@ -23,7 +22,7 @@ const ProjectCard: React.FC<ProjectProps> = ({
       <Label className={styles.fellowship}>project / {created_ts}</Label>
       <div className={styles.columns}>
         <div className={styles.left}>
-          <Image src={icon_url} />
+          <img src={icon_url} />
         </div>
 
         <div className={styles.right}>
@@ -36,7 +35,7 @@ const ProjectCard: React.FC<ProjectProps> = ({
             <>
               <h3>Participants:</h3>
               {users.map((item) => (
-                <SmallItem
+                <AdditionalInfo
                   key={item.id}
                   id={item.id}
                   url={item.avatar_url}

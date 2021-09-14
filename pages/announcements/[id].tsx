@@ -42,7 +42,6 @@ export default function AnnouncementPage() {
     }
   )
 
-  console.log(data, error, loading)
   const announcement = data?.announcement
 
   if (loading) return <Loader centered />
@@ -54,7 +53,7 @@ export default function AnnouncementPage() {
   const { body, fellowship, title } = announcement
 
   return (
-    <Layout>
+    <Layout showBackLink>
       {title}
       {body}
       {fellowship}

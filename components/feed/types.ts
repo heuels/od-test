@@ -1,7 +1,8 @@
+export type Fellowships = 'founders' | 'angels' | 'writers' | 'all'
 export type AnnouncementType = {
   id: number
   type: 'Announcement'
-  fellowship: 'founders' | 'angels' | 'writers' | 'all'
+  fellowship: Fellowships
   title: string
   body: string
   created_ts: Date

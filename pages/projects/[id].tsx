@@ -63,7 +63,7 @@ export default function ProjectPage() {
   }
 
   return (
-    <Layout>
+    <Layout showBackLink>
       <ProjectCard data={project} />
     </Layout>
   )

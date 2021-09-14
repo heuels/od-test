@@ -1,10 +1,9 @@
 import Link from 'next/link'
-import Image from 'next/image'
 
 import Text from '@ui/text'
 import Label from '@ui/label'
 
-import SmallItem from './smallItem'
+import AdditionalInfo from './additionalInfo'
 
 import { User } from './types'
 
@@ -26,7 +25,7 @@ const UserCard: React.FC<UserProps> = ({
       </Label>
       <div className={styles.columns}>
         <div className={styles.left}>
-          <Image className={styles.img} src={avatar_url} />
+          <img className={styles.img} src={avatar_url} />
         </div>
         <div className={styles.right}>
           <Text bold size="18" tagName="h2">
@@ -38,7 +37,7 @@ const UserCard: React.FC<UserProps> = ({
             <>
               <h3>Projects:</h3>
               {projects.map((item) => (
-                <SmallItem
+                <AdditionalInfo
                   key={item.id}
                   id={item.id}
                   url={item.icon_url}

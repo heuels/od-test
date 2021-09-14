@@ -10,19 +10,31 @@ type Args = {
   feedType: FellowshipType
 }
 
-function getFilterByType(type: FellowshipType): string {
+function getFilterByType(type: FellowshipType): {
+  users: string
+  announcements: string
+} {
   switch (type) {
     case 'founders':
     case 'angels':
-      return `WHERE fellowship IN('founders', 'angels', 'all')`
+      return {
+        users: `WHERE fellowship IN('founders', 'angels')`,
+        announcements: `WHERE fellowship IN('${type}')`,
+      }
       break
 
     case 'writers':
-      return `WHERE fellowship IN('writers', 'all')`
+      return {
+        users: `WHERE fellowship IN('writers', 'all')`,
+        announcements: `WHERE fellowship IN('${type}')`,
+      }
       break
 
     default:
-      return ''
+      return {
+        users: '',
+        announcements: '',
+      }
       break
   }
 }
@@ -58,7 +70,7 @@ export default async function feed(
         NULL                     as image_url,
         announcements.created_ts as created_ts 
         FROM announcements
-        ${getFilterByType(feedType)}
+        ${getFilterByType(feedType).announcements}
         UNION ALL
         SELECT users.id      as id,
             'User'           as type,
@@ -68,12 +80,11 @@ export default async function feed(
             users.avatar_url as image_url,
             users.created_ts as created_ts
         FROM users
-        ${getFilterByType(feedType)}
+        ${getFilterByType(feedType).users}
         ${projects}
         ORDER BY created_ts DESC
-          LIMIT 5
-        OFFSET ?`,
-    [offset]
+          LIMIT ${LIMIT}
+        OFFSET ${offset}`
   )
 
   if (!feedItems) {

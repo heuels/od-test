@@ -13,7 +13,12 @@ export type CardProps = {
 }
 
 const Card: React.FC<UserProps> = ({
-  data: { title, type, fellowship, body, image_url, created_ts },
+  title,
+  type,
+  fellowship,
+  body,
+  image_url,
+  created_ts,
 }) => {
   return (
     <div className={styles.root}>

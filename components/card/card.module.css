@@ -1,6 +1,6 @@
 .root {
   position: relative;
-  padding: 20px;
+  padding: 30px 20px 20px;
   margin-bottom: 40px;
   border: 1px solid #eaeaea;
 }
@@ -13,7 +13,6 @@
 .columns {
   display: flex;
   flex-direction: row;
-  min-width: 21rem;
 }
 
 .left {
@@ -36,6 +35,6 @@
 .fellowship {
   position: absolute;
   top: -13px;
-  right: 10px;
+  left: 10px;
   background: #fff;
 }

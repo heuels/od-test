@@ -62,7 +62,7 @@ export default function UserPage() {
   }
 
   return (
-    <Layout>
+    <Layout showBackLink>
       <UserCard data={user} />
     </Layout>
   )
