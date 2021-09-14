@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 import Text from '@ui/text'
 import Label from '@ui/label'
@@ -22,7 +23,7 @@ const ProjectCard: React.FC<ProjectProps> = ({
       <Label className={styles.fellowship}>project / {created_ts}</Label>
       <div className={styles.columns}>
         <div className={styles.left}>
-          <img src={icon_url} />
+          <Image src={icon_url} />
         </div>
 
         <div className={styles.right}>

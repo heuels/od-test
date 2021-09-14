@@ -11,6 +11,8 @@ export const QUERY = gql`
       created_ts
       projects {
         id
+        name
+        icon_url
       }
       users {
         id

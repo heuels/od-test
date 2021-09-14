@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 
 import styles from './smallItem.module.css'
 
@@ -13,7 +14,7 @@ const SmallItem: React.FC<SmallItemProps> = ({ id, url, name, type }) => {
   return (
     <div className={styles.container}>
       <div className={styles.left}>
-        <img className="avatar" src={url} />
+        <Image className={styles.avatar} src={url} />
       </div>
       <div className={styles.right}>
         <Link href={`/${type}/${id}`}>{name}</Link>

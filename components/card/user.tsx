@@ -1,5 +1,7 @@
-import Text from '@ui/text'
 import Link from 'next/link'
+import Image from 'next/image'
+
+import Text from '@ui/text'
 import Label from '@ui/label'
 
 import SmallItem from './smallItem'
@@ -24,7 +26,7 @@ const UserCard: React.FC<UserProps> = ({
       </Label>
       <div className={styles.columns}>
         <div className={styles.left}>
-          <img className={styles.img} src={avatar_url} />
+          <Image className={styles.img} src={avatar_url} />
         </div>
         <div className={styles.right}>
           <Text bold size="18" tagName="h2">

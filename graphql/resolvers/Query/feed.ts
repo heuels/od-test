@@ -36,32 +36,32 @@ export default async function feed(
   const projects =
     feedType !== 'writers'
       ? `UNION ALL
-SELECT DISTINCT projects.id as id,
-       'Project'            as type,
-       projects.name        as title,
-       users.fellowship     as fellowship,
-       projects.description as body,
-       projects.icon_url    as image_url,
-       projects.created_ts  as created_ts
-FROM projects
-         LEFT JOIN user_projects ON projects.id = user_projects.project_id
-         LEFT JOIN users ON users.id = user_projects.user_id
+      SELECT DISTINCT projects.id as id,
+            'Project'             as type,
+            projects.name         as title,
+            users.fellowship      as fellowship,
+            projects.description  as body,
+            projects.icon_url     as image_url,
+            projects.created_ts   as created_ts
+      FROM projects
+              LEFT JOIN user_projects ON projects.id = user_projects.project_id
+              LEFT JOIN users ON users.id = user_projects.user_id
 `
       : ''
 
   feedItems = await db.getAll(
-    `SELECT announcements.id as id,
-       'Announcement' as type,
-        announcements.title as title,
+    `SELECT announcements.id     as id,
+       'Announcement'            as type,
+        announcements.title      as title,
         announcements.fellowship as fellowship,
-        announcements.body as body,
-        NULL           as image_url,
+        announcements.body       as body,
+        NULL                     as image_url,
         announcements.created_ts as created_ts 
         FROM announcements
         ${getFilterByType(feedType)}
         UNION ALL
-        SELECT users.id as id,
-            'User'     as type,
+        SELECT users.id      as id,
+            'User'           as type,
             users.name       as title,
             users.fellowship as fellowship,
             users.bio        as body,
